@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import BooksContext from "../context/books";
 // recieve the props from the app.jsx
-const BookCreate = ({ onCreate }) => {
+const BookCreate = () => {
   const [title, seTitle] = useState("");
+  const { handleCreateBook } = useContext(BooksContext); // Call function from context
 
   const handleChange = (event) => {
     seTitle(event.target.value);
@@ -10,7 +11,7 @@ const BookCreate = ({ onCreate }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onCreate(title);
+    handleCreateBook(title);
     seTitle("");
   };
   return (
