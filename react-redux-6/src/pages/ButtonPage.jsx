@@ -2,12 +2,10 @@ import { GoBell, GoDatabase } from "react-icons/go";
 import Button from "../components/Button";
 
 function ButtonPage() {
-  const handleClick = () => {
-    console.log("Clicked!");
-  };
+  const handleClick = () => {};
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col space-y-4">
       <div>
         <Button
           secondary
