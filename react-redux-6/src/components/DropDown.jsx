@@ -8,7 +8,8 @@ function Dropdown({ options, value, onChange }) {
 
   useEffect(() => {
     const handler = (event) => {
-      if (!divEl.current.contains(event.target)) {
+      // Ensure divEl.current is not null before accessing contains
+      if (divEl.current && !divEl.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
@@ -29,16 +30,14 @@ function Dropdown({ options, value, onChange }) {
     onChange(option);
   };
 
-  const renderedOptions = options.map((option) => {
-    return (
-      <div
-        className="hover:bg-sky-100 rounded cursor-pointer p-1"
-        onClick={() => handleOptionClick(option)}
-        key={option.value}>
-        {option.label}
-      </div>
-    );
-  });
+  const renderedOptions = options.map((option) => (
+    <div
+      className="hover:bg-sky-100 rounded cursor-pointer p-1"
+      onClick={() => handleOptionClick(option)}
+      key={option.value}>
+      {option.label}
+    </div>
+  ));
 
   return (
     <div ref={divEl} className="w-48 relative">

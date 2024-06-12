@@ -1,14 +1,44 @@
 import React from "react";
 import SortableTable from "../components/SortableTable";
+
 function TablePage() {
-  // data and config are dummy data
+  const today = new Date();
+
+  // Function to calculate expiry date
+  const calculateExpireDate = (days) => {
+    const expireDate = new Date(today.getTime() + days * 24 * 60 * 60 * 1000);
+    return expireDate.toISOString().split("T")[0]; // Return date in YYYY-MM-DD format
+  };
+
+  // Adding the expireDate field to each product
   const data = [
-    { name: "Orange", color: "bg-orange-500", score: 5 },
-    { name: "Apple", color: "bg-red-500", score: 3 },
-    { name: "Banana", color: "bg-yellow-500", score: 1 },
-    { name: "Lime", color: "bg-green-500", score: 4 },
+    {
+      name: "Orange",
+      color: "bg-orange-500",
+      score: 5,
+      expireDate: calculateExpireDate(7),
+    },
+    {
+      name: "Apple",
+      color: "bg-red-500",
+      score: 3,
+      expireDate: calculateExpireDate(5),
+    },
+    {
+      name: "Banana",
+      color: "bg-yellow-500",
+      score: 1,
+      expireDate: calculateExpireDate(3),
+    },
+    {
+      name: "Lime",
+      color: "bg-green-500",
+      score: 4,
+      expireDate: calculateExpireDate(10),
+    },
   ];
-  // config is the table header
+
+  // Config for the table
   const config = [
     {
       label: "Name",
@@ -27,15 +57,27 @@ function TablePage() {
     {
       label: "Price",
       render: (fruit) => <div>${fruit.score * 2}</div>,
-      sortValue: (fruit) => fruit.score * 2,
+      sortValue: (fruit) => fruit.score,
+    },
+    {
+      label: "Squared",
+      render: (fruit) => <div>${fruit.score ** 2}</div>,
+      sortValue: (fruit) => fruit.score ** 2,
+    },
+
+    {
+      label: "Expire Date",
+      render: (fruit) => <div>{fruit.expireDate}</div>,
+      sortValue: (fruit) => new Date(fruit.expireDate), // Convert to Date object
     },
   ];
-  // keyFn is a function that returns a unique key for each row
+
+  // Key function
   const keyFn = (fruit) => {
     return fruit.name;
   };
+
   return (
-    // data, config, and keyFn are passed to the Table component
     <div>
       <SortableTable data={data} config={config} keyFn={keyFn} />
     </div>
